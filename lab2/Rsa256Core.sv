@@ -8,4 +8,14 @@ module Rsa256Core(
 	output [255:0] o_a_pow_e,
 	output o_finished
 );
+
+logic [255:0] result = 1;
+logic [255:0] a = i_a;
+
+for (i = 0; i < 256; ++i) {
+	if (i_e[i])
+		result = (result * a) % n;
+	a = (a * a) % n;
+}
+
 endmodule
