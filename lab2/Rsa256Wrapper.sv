@@ -65,15 +65,15 @@ module Rsa256Wrapper(
 	always_comb begin
 		// TODO
 	    state_w <= state_r;
-        if(state_w == S_GET_KEY) begin
+        if (state_w == S_GET_KEY) begin
         // ??
-        end else if(state_w == S_GET_DATA) begin
+        end else if (state_w == S_GET_DATA) begin
         // read data
-        end else if(state_w == S_WAIT_CALCULATE) begin
+        end else if (state_w == S_WAIT_CALCULATE) begin
             //Rsa256Core
             rsa_state_r <= 1;
             if(rsa_finished) state_w <= S_SEND_DATA;
-        end else if(state_w == S_SEND_DATA) begin
+        end else if (state_w == S_SEND_DATA) begin
         // write data
         end   
 	end
