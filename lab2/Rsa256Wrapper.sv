@@ -64,20 +64,39 @@ module Rsa256Wrapper(
 
 	always_comb begin
 		// TODO
-	    state_w <= state_r;
-        if (state_w == S_GET_KEY) begin
-        // ??
-        end else if (state_w == S_GET_DATA) begin
-        // read data
-        end else if (state_w == S_WAIT_CALCULATE) begin
-            //Rsa256Core
-            rsa_state_r <= 1;
-            if(rsa_finished) state_w <= S_SEND_DATA;
-        end else if (state_w == S_SEND_DATA) begin
-        // write data
-        end   
-	end
+	    n_w = n_r;
+        e_w = e_r;
+        enc_w = enc_r;
+        dec_w = dec_r;
+        avm_address_w = avm_address_r;
+        avm_read_w = avm_read_r;
+        avm_writer_w = avm_writer_r;
+        state_w = state_r;
+        bytes_counter_w = bytes_counter_r;
+        rsa_start_w = ras_start_r;
+        
+        case (state_r)
+            S_GET_KEY: begin
+                // ??
+            end
+            
+            S_GET_DATA: begin
+                // read data
+            end
+   
+            S_WAIT_CALCULATE: begin
+                // calculate
+                rsa_start_w = 1;
+                if(rsa_finished) begin
+                    rsa_start_w = 0;
+                    state_w = S_SEND_DATA;
+                end
+            end
 
+            S_SEND_DATA: begin
+                // transmit data
+            end
+    end
 
 	always_ff @(posedge avm_clk or posedge avm_rst) begin
 		if (avm_rst) begin
