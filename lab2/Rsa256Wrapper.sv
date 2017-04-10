@@ -18,9 +18,10 @@ module Rsa256Wrapper(
 	localparam S_GET_DATA = 1;
 	localparam S_WAIT_CALCULATE = 2;
 	localparam S_SEND_DATA = 3;
+    localparam S_GET_WRITE = 4;
 
 	logic [255:0] n_r, n_w, e_r, e_w, enc_r, enc_w, dec_r, dec_w;
-	logic [1:0] state_r, state_w;
+	logic [2:0] state_r, state_w;
 	logic [6:0] bytes_counter_r, bytes_counter_w;
     logic [6:0] n_counter_r, n_counter_w, e_counter_r, e_counter_w;
 	logic [4:0] avm_address_r, avm_address_w;
@@ -79,65 +80,73 @@ module Rsa256Wrapper(
         case (state_r)
             S_GET_KEY: begin
                 StartRead(STATUS_BASE);
-                if(avm_wait_request == 1'b0) begin
+                if(avm_wait_request == 1'b0 && anm_read_r == 1'b1) begin
                     if(avm_readdata[RX_OK_BIT] == 1'b1) begin
                         StartRead(RX_BASE);
                         state_w = S_GET_DATA;
-                    end else if (avm_readdata[TX_OK_BIT] == 1'b1) begin
-                        StartWrite(TX_BASE);
-                        state_w = S_SEND_DATA;
                     end
                 end        
             end
             
+            S_GET_WRITE: begin
+                StartRead(STATUS_BASE);
+                if(avm_wait_request == 1'b0 && avm_read_r == 1'b1) begin
+                    if(avm_readdata[TX_OK_BIT] == 1'b1) begin
+                        StartRead(TX_BASE);
+                        state_w = S_SEND_DATA;
+                    end
+                end        
+            end
+
             S_GET_DATA: begin
                 if(avm_wait_request == 1'b0 && avm_read_r == 1'b1) begin
                     state_w = S_GET_KEY; 
                     avm_read_w = 0;
 
-                    if(n_counter_w > 31) begin 
-                        n_w = n_w << 8;
-                        n_w[7:0] = readdata[7:0];
-                        n_counter_w --;
-                    end else if(e_counter_w > 31) begin
-                        e_w = e_w << 8;
-                        e_w[7:0] = readdata[7:0];
-                        e_counter_w --;
-                    end else if(bytes_counter_w >= 0) begin
-                        enc_w = enc_w << 8;
-                        enc_w[7:0] = readdata[7:0];
-                        if(bytes_counter_w == 0) begin
+                    if(n_counter_r > 31) begin 
+                        n_w = n_r << 8;
+                        n_w[7:0] = avm_readdata[7:0];
+                        n_counter_w = n_counter_r - 1;
+                    end else if(e_counter_r > 31) begin
+                        e_w = e_r << 8;
+                        e_w[7:0] = avm_readdata[7:0];
+                        e_counter_w = e_counter_r - 1;
+                    end else if(bytes_counter_r >= 0) begin
+                        enc_w = enc_r << 8;
+                        enc_w[7:0] = avm_readdata[7:0];
+                        if(bytes_counter_r == 0) begin
                             rsa_start_w = 1;
                             state_w = S_WAIT_CALCULATE;
                             bytes_counter_w = 63;
                             n_counter_w = 63;
                             e_counter_w = 63;
                         end else 
-                            bytes_counter_w --;
+                            bytes_counter_w = bytes_counter_r - 1;
                     end              
             end
    
             S_WAIT_CALCULATE: begin
                 if(rsa_finished) begin
                     rsa_start_w = 0;
-                    state_w = S_GET_KEY;
+                    state_w = S_GET_WRITE;
                     dec_w = rsa_dec;
                 end
             end
 
             S_SEND_DATA: begin
-                if(avm_wait_request == 1'b0 && avm_write_w == 1'b1) begin
-                    state_w = S_GET_KEY;
+                if(avm_wait_request == 1'b0 && avm_write_r == 1'b1) begin
+                    state_w = S_GET_WRITE;
                     avm_write_w = 0;
-                    bytes_counter_w --;
-                    dec_w = dec_w >> 8;
-                    writedata[7:0] = dec_w[7:0];
-                    if(bytes_counter_w == 0) begin
+                    avm_read_w = 0;
+                    dec_w = dec_r << 8;
+                    if(bytes_counter_r == 1) begin
                         state_w = S_GET_KEY;
                         bytes_counter_w = 63;
-                    end
+                    end else
+                        bytes_counter_w = bytes_counter_r - 1;
                 end
             end
+        endcase
     end
 
 	always_ff @(posedge avm_clk or posedge avm_rst) begin
