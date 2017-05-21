@@ -1,0 +1,80 @@
+Info: Starting: Create simulation model
+Info: qsys-generate /home/wei/Course/DCLab/lab3/src/jfjplayer.qsys --simulation=VERILOG --allow-mixed-language-simulation --output-directory=/home/wei/Course/DCLab/lab3/src/jfjplayer/simulation --family="Cyclone IV E" --part=EP4CE115F29C7
+Progress: Loading src/jfjplayer.qsys
+Progress: Reading input file
+Progress: Adding altpll_0 [altpll 16.0]
+Progress: Parameterizing module altpll_0
+Progress: Adding clk_0 [clock_source 16.0]
+Progress: Parameterizing module clk_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Warning: jfjplayer.altpll_0: altpll_0.areset_conduit must be exported, or connected to a matching conduit.
+Warning: jfjplayer.altpll_0: altpll_0.locked_conduit must be exported, or connected to a matching conduit.
+Warning: jfjplayer.altpll_0: altpll_0.pll_slave must be connected to an Avalon-MM master
+Info: jfjplayer: Generating jfjplayer "jfjplayer" for SIM_VERILOG
+Error: altpll_0: Port phasecounterselect has width 4 in TCL, but 3 in the design file
+Info: altpll_0: "jfjplayer" instantiated altpll "altpll_0"
+Error: Generation stopped, 1 or more modules remaining
+Info: jfjplayer: Done "jfjplayer" with 3 modules, 1 files
+Error: qsys-generate failed with exit code 1: 2 Errors, 3 Warnings
+Info: Finished: Create simulation model
+Info: Starting: Create Modelsim Project.
+Info: sim-script-gen --spd=/home/wei/Course/DCLab/lab3/src/jfjplayer/jfjplayer.spd --output-directory=/home/wei/Course/DCLab/lab3/src/jfjplayer/simulation/ --use-relative-paths=true
+Info: Doing: ip-make-simscript --spd=/home/wei/Course/DCLab/lab3/src/jfjplayer/jfjplayer.spd --output-directory=/home/wei/Course/DCLab/lab3/src/jfjplayer/simulation/ --use-relative-paths=true
+Info: Generating the following file(s) for MODELSIM simulator in /home/wei/Course/DCLab/lab3/src/jfjplayer/simulation/ directory:
+Info: 	mentor/msim_setup.tcl
+Info: Generating the following file(s) for VCS simulator in /home/wei/Course/DCLab/lab3/src/jfjplayer/simulation/ directory:
+Info: 	synopsys/vcs/vcs_setup.sh
+Info: Generating the following file(s) for VCSMX simulator in /home/wei/Course/DCLab/lab3/src/jfjplayer/simulation/ directory:
+Info: 	synopsys/vcsmx/synopsys_sim.setup
+Info: 	synopsys/vcsmx/vcsmx_setup.sh
+Info: Generating the following file(s) for NCSIM simulator in /home/wei/Course/DCLab/lab3/src/jfjplayer/simulation/ directory:
+Info: 	cadence/cds.lib
+Info: 	cadence/hdl.var
+Info: 	cadence/ncsim_setup.sh
+Info: Generating the following file(s) for RIVIERA simulator in /home/wei/Course/DCLab/lab3/src/jfjplayer/simulation/ directory:
+Info: 	aldec/rivierapro_setup.tcl
+Info: For information on how to simulate your IP, see the explanatory comments in the simulator-specific subdirectories under /home/wei/Course/DCLab/lab3/src/jfjplayer/simulation/.
+Info: Finished: Create Modelsim Project.
+Info: Starting: Create block symbol file (.bsf)
+Info: qsys-generate /home/wei/Course/DCLab/lab3/src/jfjplayer.qsys --block-symbol-file --output-directory=/home/wei/Course/DCLab/lab3/src/jfjplayer --family="Cyclone IV E" --part=EP4CE115F29C7
+Progress: Loading src/jfjplayer.qsys
+Progress: Reading input file
+Progress: Adding altpll_0 [altpll 16.0]
+Progress: Parameterizing module altpll_0
+Progress: Adding clk_0 [clock_source 16.0]
+Progress: Parameterizing module clk_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Warning: jfjplayer.altpll_0: altpll_0.areset_conduit must be exported, or connected to a matching conduit.
+Warning: jfjplayer.altpll_0: altpll_0.locked_conduit must be exported, or connected to a matching conduit.
+Warning: jfjplayer.altpll_0: altpll_0.pll_slave must be connected to an Avalon-MM master
+Info: qsys-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: qsys-generate /home/wei/Course/DCLab/lab3/src/jfjplayer.qsys --synthesis=VERILOG --output-directory=/home/wei/Course/DCLab/lab3/src/jfjplayer/synthesis --family="Cyclone IV E" --part=EP4CE115F29C7
+Progress: Loading src/jfjplayer.qsys
+Progress: Reading input file
+Progress: Adding altpll_0 [altpll 16.0]
+Progress: Parameterizing module altpll_0
+Progress: Adding clk_0 [clock_source 16.0]
+Progress: Parameterizing module clk_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Warning: jfjplayer.altpll_0: altpll_0.areset_conduit must be exported, or connected to a matching conduit.
+Warning: jfjplayer.altpll_0: altpll_0.locked_conduit must be exported, or connected to a matching conduit.
+Warning: jfjplayer.altpll_0: altpll_0.pll_slave must be connected to an Avalon-MM master
+Info: jfjplayer: Generating jfjplayer "jfjplayer" for QUARTUS_SYNTH
+Error: altpll_0: Port phasecounterselect has width 4 in TCL, but 3 in the design file
+Info: altpll_0: "jfjplayer" instantiated altpll "altpll_0"
+Error: Generation stopped, 1 or more modules remaining
+Info: jfjplayer: Done "jfjplayer" with 3 modules, 2 files
+Error: qsys-generate failed with exit code 1: 2 Errors, 3 Warnings
+Info: Finished: Create HDL design files for synthesis

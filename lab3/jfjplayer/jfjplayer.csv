@@ -1,0 +1,18 @@
+# system info jfjplayer on 2017.05.01.19:57:13
+system_info:
+name,value
+DEVICE,EP4CE115F29C7
+DEVICE_FAMILY,Cyclone IV E
+GENERATION_ID,1493639830
+#
+#
+# Files generated for jfjplayer on 2017.05.01.19:57:13
+files:
+filepath,kind,attributes,module,is_top
+simulation/jfjplayer.v,VERILOG,,jfjplayer,true
+#
+# Map from instance-path to kind of module
+instances:
+instancePath,module
+jfjplayer.altpll_0,jfjplayer_altpll_0
+jfjplayer.rst_controller,altera_reset_controller

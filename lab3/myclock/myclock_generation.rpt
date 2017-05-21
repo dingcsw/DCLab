@@ -1,0 +1,42 @@
+Info: Starting: Create block symbol file (.bsf)
+Info: qsys-generate /home/wei/Course/DCLab/lab3/myclock.qsys --block-symbol-file --output-directory=/home/wei/Course/DCLab/lab3/myclock --family="Cyclone IV E" --part=EP4CE115F29C7
+Progress: Loading lab3/myclock.qsys
+Progress: Reading input file
+Progress: Adding altpll_0 [altpll 16.0]
+Progress: Parameterizing module altpll_0
+Progress: Adding clk_0 [clock_source 16.0]
+Progress: Parameterizing module clk_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Warning: myclock.altpll_0: altpll_0.areset_conduit must be exported, or connected to a matching conduit.
+Warning: myclock.altpll_0: altpll_0.locked_conduit must be exported, or connected to a matching conduit.
+Warning: myclock.altpll_0: altpll_0.pll_slave must be connected to an Avalon-MM master
+Info: qsys-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: qsys-generate /home/wei/Course/DCLab/lab3/myclock.qsys --synthesis=VERILOG --greybox --output-directory=/home/wei/Course/DCLab/lab3/myclock/synthesis --family="Cyclone IV E" --part=EP4CE115F29C7
+Progress: Loading lab3/myclock.qsys
+Progress: Reading input file
+Progress: Adding altpll_0 [altpll 16.0]
+Progress: Parameterizing module altpll_0
+Progress: Adding clk_0 [clock_source 16.0]
+Progress: Parameterizing module clk_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Warning: myclock.altpll_0: altpll_0.areset_conduit must be exported, or connected to a matching conduit.
+Warning: myclock.altpll_0: altpll_0.locked_conduit must be exported, or connected to a matching conduit.
+Warning: myclock.altpll_0: altpll_0.pll_slave must be connected to an Avalon-MM master
+Info: myclock: Generating myclock "myclock" for QUARTUS_SYNTH
+Error: altpll_0: Port phasecounterselect has width 4 in TCL, but 3 in the design file
+Info: altpll_0: "myclock" instantiated altpll "altpll_0"
+Error: Generation stopped, 1 or more modules remaining
+Info: myclock: Done "myclock" with 3 modules, 2 files
+Info: Generating third-party timing and resource estimation model ...
+Error: Third-party timing and resource estimation model project creation failed: /home/wei/altera/16.0/quartus/linux64/quartus_sh -t quartus_greybox.tcl
+Error: qsys-generate failed with exit code 1: 3 Errors, 3 Warnings
+Info: Finished: Create HDL design files for synthesis
